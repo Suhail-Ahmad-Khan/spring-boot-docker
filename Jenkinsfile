@@ -13,7 +13,7 @@ node {
 
         app = docker.build("fundoopay-docker")
 	app.inside {
-      			sh 'mvn clean package'
+      			sh 'clean package'
  		   }
     }
 
