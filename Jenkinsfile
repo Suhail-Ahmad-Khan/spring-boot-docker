@@ -12,6 +12,9 @@ node {
          * docker build on the command line */
 
         app = docker.build("fundoopay-docker")
+	app.inside {
+      			sh 'mvn clean package'
+ 		   }
     }
 
     stage('Test image') {
