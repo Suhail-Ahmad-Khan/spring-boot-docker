@@ -7,6 +7,38 @@ node {
         checkout scm
     }
 
+
+
+
+    stage ('Initialize Maven') {
+            steps {
+                sh '''
+                    echo "PATH = ${PATH}"
+                    echo "M2_HOME = ${M2_HOME}"
+                '''
+            }
+        }
+
+
+
+
+     stage ('Build Maven') {
+            steps {
+                sh 'mvn -Dmaven.test.failure.ignore=true install' 
+            }
+            post {
+                success {
+                    junit 'target/surefire-reports/**/*.xml' 
+                }
+            }
+        }
+
+
+
+
+
+
+
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
