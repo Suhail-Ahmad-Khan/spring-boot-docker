@@ -7,37 +7,23 @@ node {
         checkout scm
     }
 
-
-
-
     stage ('Initialize Maven') {
                 sh '''
                     echo "PATH = ${PATH}"
                     echo "M2_HOME = ${M2_HOME}"
                 '''
-        }
-
-
-
+    }
 
      stage ('Build Maven') {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+                withMaven(maven: 'Maven')
+                sh 'mvn clean package'
         }
-
-
-
-
-
-
 
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
         app = docker.build("fundoopay-docker")
-	app.inside {
-      			sh 'clean package'
- 		   }
     }
 
     stage('Test image') {
