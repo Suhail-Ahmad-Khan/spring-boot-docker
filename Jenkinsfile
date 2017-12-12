@@ -7,18 +7,6 @@ node {
         checkout scm
     }
 
-    stage ('Initialize Maven') {
-                sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
-                '''
-    }
-
-     stage ('Build Maven') {
-                withMaven(maven: 'Maven')
-                sh 'mvn clean package'
-        }
-
     stage('Build image') {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
